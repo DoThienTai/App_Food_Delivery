@@ -2,6 +2,7 @@ import 'package:app_food_delivery/controllers/popular_product_controller.dart';
 import 'package:app_food_delivery/pages/food/popular_food_detail.dart';
 import 'package:app_food_delivery/pages/food/recommended_food_detail.dart';
 import 'package:app_food_delivery/pages/home/main_food_page.dart';
+import 'package:app_food_delivery/routes/route_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -29,6 +30,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const MainFoodPage(),
+      initialRoute: RouteHelper.initial,
+      getPages: RouteHelper.routes,
     );
   }
 }

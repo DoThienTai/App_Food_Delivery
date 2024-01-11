@@ -8,8 +8,11 @@ class PopularProductController extends GetxController {
   PopularProductController({required this.popularProductRepo});
   List<dynamic> _popularProductList = [];
   List<dynamic> get popularProductList => _popularProductList;
+
   bool _isLoaded = false;
   bool get isLoaded =>_isLoaded;
+
+  int _quantity = 0;
   Future<void> getPopularProductList()async{
     Response response = await popularProductRepo.getPopularProductList();
     if(response.statusCode==200){
@@ -20,4 +23,14 @@ class PopularProductController extends GetxController {
     }else{}
 
   }
+
+  // void setQuantity(bool isIncrement){
+  //   if(isIncrement){
+  //
+  //   }else{
+  //
+  //   }
+  // }
+
+
 }

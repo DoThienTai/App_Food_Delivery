@@ -1,6 +1,8 @@
 import 'package:app_food_delivery/controllers/popular_product_controller.dart';
 import 'package:app_food_delivery/controllers/recommended_product_controller.dart';
 import 'package:app_food_delivery/models/product_model.dart';
+import 'package:app_food_delivery/pages/food/popular_food_detail.dart';
+import 'package:app_food_delivery/routes/route_helper.dart';
 import 'package:app_food_delivery/utils/app_constants.dart';
 import 'package:app_food_delivery/widget/app_column.dart';
 import 'package:dots_indicator/dots_indicator.dart';
@@ -111,7 +113,7 @@ class _BodyFoodPageState extends State<BodyFoodPage> {
             ],
           ),
         ),
-        //List of food an images
+        //List of food an images, recommended food
         GetBuilder<RecommendedProductController>(builder: (recommendedProduct) {
           return recommendedProduct.isLoaded
               ? ListView.builder(
@@ -119,58 +121,66 @@ class _BodyFoodPageState extends State<BodyFoodPage> {
                   shrinkWrap: true,
                   itemCount: recommendedProduct.recommendedProductList.length,
                   itemBuilder: (context, index) {
-                    return Container(
-                      margin: EdgeInsets.only(
-                          left: Dimensions.width20,
-                          right: Dimensions.width20,
-                          bottom: Dimensions.height20),
-                      child: Row(
-                        children: [
-                          //image secsion
-                          Container(
-                            width: Dimensions.listViewImgSize,
-                            height: Dimensions.listViewImgSize,
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.circular(Dimensions.radius20),
-                              color: Colors.white38,
-                              image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: NetworkImage(AppConstants.BASE_URL +
-                                    "/uploads/" +
-                                    recommendedProduct.recommendedProductList[index].img!),
-                              ),
-                            ),
-                          ),
-                          //text container
-                          Expanded(
-                            child: Container(
-                              height: Dimensions.listViewTextConSize,
+                    return GestureDetector(
+                      onTap: () {
+                        Get.toNamed(RouteHelper.getRecommendedFood(index));
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(
+                            left: Dimensions.width20,
+                            right: Dimensions.width20,
+                            bottom: Dimensions.height20),
+                        child: Row(
+                          children: [
+                            //image secsion
+                            Container(
+                              width: Dimensions.listViewImgSize,
+                              height: Dimensions.listViewImgSize,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                  topRight:
-                                      Radius.circular(Dimensions.radius20),
-                                  bottomRight:
-                                      Radius.circular(Dimensions.radius20),
+                                borderRadius:
+                                    BorderRadius.circular(Dimensions.radius20),
+                                color: Colors.white38,
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage(AppConstants.BASE_URL +
+                                      AppConstants.UPLOAD_URL +
+                                      recommendedProduct
+                                          .recommendedProductList[index].img!),
                                 ),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color(0xFFe8e8e8),
-                                    blurRadius: 5.0,
-                                    offset: Offset(0, 5),
-                                  ),
-                                ],
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                    left: Dimensions.width10,
-                                    right: Dimensions.width10),
-                                child: AppColumn(text: "vn side"),
                               ),
                             ),
-                          ),
-                        ],
+                            //text container
+                            Expanded(
+                              child: Container(
+                                height: Dimensions.listViewTextConSize,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                    topRight:
+                                        Radius.circular(Dimensions.radius20),
+                                    bottomRight:
+                                        Radius.circular(Dimensions.radius20),
+                                  ),
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Color(0xFFe8e8e8),
+                                      blurRadius: 5.0,
+                                      offset: Offset(0, 5),
+                                    ),
+                                  ],
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                      left: Dimensions.width10,
+                                      right: Dimensions.width10),
+                                  child: AppColumn(
+                                      text: recommendedProduct
+                                          .recommendedProductList[index].name!),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   })
@@ -211,17 +221,23 @@ class _BodyFoodPageState extends State<BodyFoodPage> {
       transform: matrix,
       child: Stack(
         children: [
-          Container(
-            height: Dimensions.pageViewContainer,
-            margin: EdgeInsets.only(
-                right: Dimensions.width10, left: Dimensions.width10),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(Dimensions.radius30),
-              color: index.isEven ? Color(0xFF69c5df) : Color(0xFF9294cc),
-              image: DecorationImage(
-                image: NetworkImage(
-                    AppConstants.BASE_URL + "/uploads/" + popularProduct.img!),
-                fit: BoxFit.cover,
+          GestureDetector(
+            onTap: () {
+              Get.toNamed(RouteHelper.getPopularFood(index));
+            },
+            child: Container(
+              height: Dimensions.pageViewContainer,
+              margin: EdgeInsets.only(
+                  right: Dimensions.width10, left: Dimensions.width10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(Dimensions.radius30),
+                color: index.isEven ? Color(0xFF69c5df) : Color(0xFF9294cc),
+                image: DecorationImage(
+                  image: NetworkImage(AppConstants.BASE_URL +
+                      AppConstants.UPLOAD_URL +
+                      popularProduct.img!),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),

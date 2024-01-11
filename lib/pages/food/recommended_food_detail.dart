@@ -1,25 +1,39 @@
+import 'package:app_food_delivery/controllers/recommended_product_controller.dart';
+import 'package:app_food_delivery/routes/route_helper.dart';
 import 'package:app_food_delivery/utils/colors.dart';
 import 'package:app_food_delivery/utils/dimensions.dart';
 import 'package:app_food_delivery/widget/app_icon.dart';
 import 'package:app_food_delivery/widget/big_text.dart';
 import 'package:app_food_delivery/widget/expandable_text_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../utils/app_constants.dart';
 
 class RecommendedFoodDetail extends StatelessWidget {
-  const RecommendedFoodDetail({super.key});
+  final int pageId;
+  const RecommendedFoodDetail({super.key, required this.pageId});
 
   @override
   Widget build(BuildContext context) {
+    var product =
+        Get.find<RecommendedProductController>().recommendedProductList[pageId];
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
+            automaticallyImplyLeading:
+                false, // tắt hiển thị nút back măck đinh trên SliverAppbar
             toolbarHeight: 90,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                AppIcon(icon: Icons.clear),
+                GestureDetector(
+                    onTap: () {
+                      Get.toNamed(RouteHelper.getInitial());
+                    },
+                    child: AppIcon(icon: Icons.clear)),
                 AppIcon(icon: Icons.shopping_cart_outlined),
               ],
             ),
@@ -35,15 +49,16 @@ class RecommendedFoodDetail extends StatelessWidget {
                       topLeft: Radius.circular(Dimensions.radius20),
                     )),
                 child: Center(
-                    child: BigText(size: Dimensions.font26, text: "Vn side")),
+                    child:
+                        BigText(size: Dimensions.font26, text: product.name!)),
               ),
             ),
             pinned: true,
             backgroundColor: AppColors.yellowColor,
             expandedHeight: 300,
             flexibleSpace: FlexibleSpaceBar(
-              background: Image.asset(
-                "assets/image/food0.png",
+              background: Image.network(
+                AppConstants.BASE_URL + AppConstants.UPLOAD_URL + product.img!,
                 width: double.maxFinite,
                 fit: BoxFit.cover,
               ),
@@ -58,8 +73,7 @@ class RecommendedFoodDetail extends StatelessWidget {
                     right: Dimensions.width20,
                   ),
                   child: ExpandableTextWidget(
-                    text:
-                        "Pho is essentially Vietnam’s signature dish, comprising rice noodles in a flavourful soup with meat and various greens, plus a side of nuoc cham (fermented fish) or chilli sauce. A basic bowl contains beef or chicken, topped with bean sprouts, lime wedges, and fresh herbs such as basil, mint, cilantro, and onions. Depending on the restaurant or roadside stall, you can also opt for more exotic ingredients such as gan (beef tendon), sach (thinly-sliced pig stomach), and ve don (flank with cartilage). Typically eaten for breakfast, pho is priced between VND 20,000 and VND 30,000 at a local restaurant or street market in Vietnam. Pho has shown its position not only in Vietnamese cuisine but also world cuisine. Pho can be seen everywhere from street stalls to high-end restaurants.Commonly well-known along with Pho, Vietnamese baguette sandwiches, called Banh Mi, have attracted a growing fan base around the world. The uniqueness of Banh mi not only lies within the light and crispy baguette, but also the variation of flavors Vietnam fillings bring out the most amazing flavor. Banh mi is a unique French-Vietnamese sandwich that’s great for when you’re in need of a quick meal. Priced between VND 10,000 and VND 15,000, it consists of a toasted baguette sandwich, pickled vegetables, pate, butter, soy sauce, cilantro, chillies, etc. Most banh mi sellers also offer a wide range of meat fillings, including heo quay (roasted pork belly), trung op la (fried egg), thit nuong (grilled pork loin), cha ca (fried fish with turmeric and dill), cha lua (boiled sausages), xa xiu (Chinese barbecued pork), and thit ga (poached chicken). With it reputation, Banh mi is considered to be the essence of Vietnamese cuisine. It is a must-try that even the pickiest eaters can’t resist.",
+                    text: product.description!,
                   ),
                 ),
               ],
@@ -79,12 +93,21 @@ class RecommendedFoodDetail extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                AppIcon(
-                    iconSize: Dimensions.iconSize24,
-                    iconColor: Colors.white,
-                    backgroundColor: AppColors.mainColor,
-                    icon: Icons.remove),
-                BigText(text: "\$12.88 " + " X " + " 0 ", color: AppColors.mainBlackColor,size: Dimensions.font26,),
+                GestureDetector(
+                  onTap: () {
+                    Get.toNamed(RouteHelper.getInitial());
+                  },
+                  child: AppIcon(
+                      iconSize: Dimensions.iconSize24,
+                      iconColor: Colors.white,
+                      backgroundColor: AppColors.mainColor,
+                      icon: Icons.remove),
+                ),
+                BigText(
+                  text: "\$${product.price!} X 0 ",
+                  color: AppColors.mainBlackColor,
+                  size: Dimensions.font26,
+                ),
                 AppIcon(
                     iconSize: Dimensions.iconSize24,
                     iconColor: Colors.white,
