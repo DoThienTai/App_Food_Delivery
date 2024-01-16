@@ -78,7 +78,7 @@ class PopularFoodDetail extends StatelessWidget {
                           : Container(),
                       Get.find<PopularProductController>().totalItem >= 1
                           ? Positioned(
-                              right: 5,
+                              right: 3,
                               top: 1,
                               child: BigText(text: Get.find<PopularProductController>().totalItem.toString(),
                                 size: 12,
@@ -189,24 +189,24 @@ class PopularFoodDetail extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
-                child: GestureDetector(
-                  onTap: () {
-                    popularProduct.addItem(product);
-                  },
+              GestureDetector(
+                onTap: () {
+                  popularProduct.addItem(product);
+                },
+                child: Container(
                   child: BigText(
                     text: "\$${product.price!}" + " | Add to card",
                     color: Colors.white,
                   ),
-                ),
-                padding: EdgeInsets.only(
-                    top: Dimensions.height15,
-                    bottom: Dimensions.height15,
-                    right: Dimensions.width20,
-                    left: Dimensions.width20),
-                decoration: BoxDecoration(
-                  color: AppColors.mainColor,
-                  borderRadius: BorderRadius.circular(Dimensions.radius20),
+                  padding: EdgeInsets.only(
+                      top: Dimensions.height15,
+                      bottom: Dimensions.height15,
+                      right: Dimensions.width20,
+                      left: Dimensions.width20),
+                  decoration: BoxDecoration(
+                    color: AppColors.mainColor,
+                    borderRadius: BorderRadius.circular(Dimensions.radius20),
+                  ),
                 ),
               ),
             ],
