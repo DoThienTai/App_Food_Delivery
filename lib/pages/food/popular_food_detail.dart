@@ -17,7 +17,8 @@ import '../../widget/small_text.dart';
 
 class PopularFoodDetail extends StatelessWidget {
   final int pageId;
-  const PopularFoodDetail({super.key, required this.pageId});
+  final String page;
+  const PopularFoodDetail({super.key, required this.pageId, required this.page});
 
   @override
   Widget build(BuildContext context) {
@@ -56,37 +57,49 @@ class PopularFoodDetail extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Get.toNamed(RouteHelper.getInitial());
+                    if(page=="cartpage"){
+                      Get.toNamed(RouteHelper.getCartpage());
+                    }else{
+                      Get.toNamed(RouteHelper.getInitial());
+                    }
                   },
                   child: AppIcon(icon: Icons.arrow_back_ios),
                 ),
                 GetBuilder<PopularProductController>(builder: (controller) {
-                  return Stack(
-                    children: [
-                      AppIcon(icon: Icons.shopping_cart_outlined),
-                      Get.find<PopularProductController>().totalItem >= 1
-                          ? Positioned(
-                              right: 0,
-                              top: 0,
-                              child: AppIcon(
-                                icon: Icons.circle,
-                                size: 20,
-                                iconColor: Colors.transparent,
-                                backgroundColor: AppColors.mainColor,
-                              ),
-                            )
-                          : Container(),
-                      Get.find<PopularProductController>().totalItem >= 1
-                          ? Positioned(
-                              right: 3,
-                              top: 1,
-                              child: BigText(text: Get.find<PopularProductController>().totalItem.toString(),
-                                size: 12,
-                                color: Colors.white,
-                              ),
-                            )
-                          : Container()
-                    ],
+                  return GestureDetector(
+                    onTap: () {
+                      Get.toNamed(RouteHelper.getCartpage());
+                    },
+                    child: Stack(
+                      children: [
+                        AppIcon(icon: Icons.shopping_cart_outlined),
+                        controller.totalItem >= 1
+                            ? Positioned(
+                                right: 0,
+                                top: 0,
+                                child: AppIcon(
+                                  icon: Icons.circle,
+                                  size: 20,
+                                  iconColor: Colors.transparent,
+                                  backgroundColor: AppColors.mainColor,
+                                ),
+                              )
+                            : Container(),
+                        controller.totalItem >= 1
+                            ? Positioned(
+                                right: 3,
+                                top: 1,
+                                child: BigText(
+                                  text: Get.find<PopularProductController>()
+                                      .totalItem
+                                      .toString(),
+                                  size: 12,
+                                  color: Colors.white,
+                                ),
+                              )
+                            : Container()
+                      ],
+                    ),
                   );
                 })
               ],

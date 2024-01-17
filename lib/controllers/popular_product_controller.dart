@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:app_food_delivery/data/respository/popular_product_repo.dart';
 
+import '../models/cart_model.dart';
 import '../models/product_model.dart';
 
 class PopularProductController extends GetxController {
@@ -48,6 +49,10 @@ class PopularProductController extends GetxController {
         backgroundColor: AppColors.mainColor,
         colorText: Colors.white,
       );
+      if(_inCartItems>0){
+        _quantity = - _inCartItems;
+        return _quantity;
+      }
       return 0;
     }else if((_inCartItems+quantity)>20){
       Get.snackbar("Item count", "You can't add more !",
@@ -75,13 +80,14 @@ class PopularProductController extends GetxController {
     _cart.addItem(product, _quantity);
     _quantity = 0;
     _inCartItems = _cart.getQuantity(product);
-    _cart.items.forEach((key, value) {
-      print("the id is "+ value.id.toString() + "the quantityis "+ value.quantity.toString());
-    });
     update();
   }
 
   int get totalItem{
     return _cart.totalItems;
+  }
+
+  List<CartModel> get getItems{
+    return _cart.getItems;
   }
 }
