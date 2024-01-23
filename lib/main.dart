@@ -1,3 +1,4 @@
+import 'package:app_food_delivery/controllers/cart_controller.dart';
 import 'package:app_food_delivery/controllers/popular_product_controller.dart';
 import 'package:app_food_delivery/pages/food/popular_food_detail.dart';
 import 'package:app_food_delivery/pages/food/recommended_food_detail.dart';
@@ -18,10 +19,10 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Get.find<CartController>().getCartData();
     return GetBuilder<PopularProductController>(
       builder: (_) {
         return GetBuilder<RecommendedProductController>(builder: (_) {

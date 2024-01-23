@@ -13,6 +13,9 @@ class CartController extends GetxController {
   Map<int, CartModel> _items = {};
   Map<int, CartModel> get items => _items;
 
+  //chi de storge va sharedpreferences
+  List<CartModel> storageItems = [];
+
   void addItem(ProductModel product, int quantity) {
     var totalQuantity = 0;
     //ktra item co trong map,co thì update item
@@ -39,10 +42,6 @@ class CartController extends GetxController {
       if (quantity > 0) {
         //ktra item co trong map, chua co thì them mơi nêu key chua ton tai
         _items.putIfAbsent(product.id!, () {
-          print("add item to thr card id" +
-              product.id!.toString() +
-              "quantity" +
-              quantity.toString());
           return CartModel(
             id: product.id,
             name: product.name,
@@ -63,9 +62,11 @@ class CartController extends GetxController {
         );
       }
     }
+    cartRepo.addToCartList(getItems);
     update();
   }
 
+  //kiem tra item co trong cart?
   bool existInCart(ProductModel product) {
     if (_items.containsKey(product.id)) {
       return true;
@@ -73,6 +74,7 @@ class CartController extends GetxController {
     return false;
   }
 
+  //tra ra so luong cua item
   int getQuantity(ProductModel product) {
     var quantity = 0;
     if (_items.containsKey(product.id)) {
@@ -85,6 +87,7 @@ class CartController extends GetxController {
     return quantity;
   }
 
+  //tra ra tong cac item
   int get totalItems{
     var totalQuantity = 0;
     _items.forEach((key, value) {
@@ -99,11 +102,28 @@ class CartController extends GetxController {
     }).toList();
   }
 
+  //tra ve tong so tien cua cac item
   int get totalAmount{
     var total = 0;
     _items.forEach((key, value) {
       total += value.quantity!*value.price!;
     });
     return total;
+  }
+
+  //lay data tu luu tru cuc bo
+  List<CartModel> getCartData(){
+
+    setCart = cartRepo.getCartList();
+
+    return storageItems;
+  }
+
+  set setCart(List<CartModel> items){
+    storageItems = items;
+    print("length of cart item " + storageItems.length.toString());
+    for(int i=0; i<storageItems.length;i++){
+      _items.putIfAbsent(storageItems[i].product!.id!, () => storageItems[i]);
+    }
   }
 }
