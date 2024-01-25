@@ -34,6 +34,7 @@ class PopularProductController extends GetxController {
 
   }
 
+  //ham tang giam so luong
   void setQuantity(bool isIncrement){
     if(isIncrement){
       _quantity = checkQuantity(_quantity+1);
@@ -43,6 +44,7 @@ class PopularProductController extends GetxController {
     update();
   }
 
+  //ham kiem tra so luong item
   int checkQuantity(int quantity){
     if((_inCartItems+quantity)<0){
       Get.snackbar("Item count", "You can't reduce more !",
@@ -64,6 +66,7 @@ class PopularProductController extends GetxController {
       return quantity;
     }
   }
+
 
   void initProduct(ProductModel product,CartController cart){
     _quantity = 0;
