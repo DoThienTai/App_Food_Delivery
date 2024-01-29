@@ -1,5 +1,6 @@
 import 'package:app_food_delivery/controllers/cart_controller.dart';
 import 'package:app_food_delivery/controllers/popular_product_controller.dart';
+import 'package:app_food_delivery/pages/auth/sign_up_page.dart';
 import 'package:app_food_delivery/pages/food/popular_food_detail.dart';
 import 'package:app_food_delivery/pages/food/recommended_food_detail.dart';
 import 'package:app_food_delivery/pages/home/main_food_page.dart';
@@ -33,9 +34,9 @@ class MyApp extends StatelessWidget {
               colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
               useMaterial3: true,
             ),
-            // home: SplashScreen(),
-            initialRoute: RouteHelper.getSplashPage(),
-            getPages: RouteHelper.routes,
+             home: SignUpPage(),
+            //initialRoute: RouteHelper.getSplashPage(),
+            //getPages: RouteHelper.routes,
           );
         });
       },

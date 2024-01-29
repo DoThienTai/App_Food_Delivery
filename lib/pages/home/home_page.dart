@@ -1,3 +1,5 @@
+import 'package:app_food_delivery/pages/account/account_page.dart';
+import 'package:app_food_delivery/pages/auth/sign_up_page.dart';
 import 'package:app_food_delivery/pages/cart/cart_history.dart';
 import 'package:app_food_delivery/pages/home/main_food_page.dart';
 import 'package:app_food_delivery/utils/colors.dart';
@@ -37,9 +39,9 @@ class _HomePageState extends State<HomePage> {
   List<Widget> _buildScreens() {
     return [
       MainFoodPage(),
-      Container(child: Center(child:  Text('Next page'))),
+      SignUpPage(),
       CartHistory(),
-      Container(child: Center(child:  Text('Next next next page'))),
+      AccountPage(),
     ];
   }
   List<PersistentBottomNavBarItem> _navBarsItems() {
