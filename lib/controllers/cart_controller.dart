@@ -151,4 +151,11 @@ class CartController extends GetxController {
     _items = {};
     _items = setItems;
   }
+
+
+  // xoa khi dang xuat
+  void clearCartHistory(){
+    cartRepo.clearCartHistory();
+    update();
+  }
 }
