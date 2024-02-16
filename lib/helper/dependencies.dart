@@ -1,9 +1,11 @@
 import 'package:app_food_delivery/controllers/auth_controller.dart';
 import 'package:app_food_delivery/controllers/cart_controller.dart';
+import 'package:app_food_delivery/controllers/location_controller.dart';
 import 'package:app_food_delivery/controllers/popular_product_controller.dart';
 import 'package:app_food_delivery/data/api/api_client.dart';
 import 'package:app_food_delivery/data/respository/auth_repo.dart';
 import 'package:app_food_delivery/data/respository/cart_repo.dart';
+import 'package:app_food_delivery/data/respository/location_repo.dart';
 import 'package:app_food_delivery/data/respository/popular_product_repo.dart';
 import 'package:app_food_delivery/utils/app_constants.dart';
 import 'package:get/get.dart';
@@ -28,11 +30,12 @@ Future<void> init() async{
   Get.lazyPut(() => PopularproductRepo(apiClient: Get.find()));
   Get.lazyPut(() =>RecommendedProductRepo(apiClient: Get.find()));
   Get.lazyPut(() =>CartRepo(sharedPreferences: Get.find()));
-
+  Get.lazyPut(() =>LocationRepo(apiClient: Get.find(),sharedPreferences: Get.find()));
   //controller
   Get.lazyPut(() => AuthController(authRepo: Get.find()));
   Get.lazyPut(() => PopularProductController(popularProductRepo: Get.find()));
   Get.lazyPut(() => RecommendedProductController(recommendedProductRepo: Get.find()));
   Get.lazyPut(() => CartController(cartRepo: Get.find()));
   Get.lazyPut(() => UserController(userRepo: Get.find()));
+  Get.lazyPut(() => LocationController(locationRepo: Get.find()));
 }
