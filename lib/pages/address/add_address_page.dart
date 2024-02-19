@@ -2,6 +2,7 @@ import 'package:app_food_delivery/controllers/auth_controller.dart';
 import 'package:app_food_delivery/controllers/location_controller.dart';
 import 'package:app_food_delivery/controllers/user_controller.dart';
 import 'package:app_food_delivery/models/address_model.dart';
+import 'package:app_food_delivery/pages/address/pick_address_map.dart';
 import 'package:app_food_delivery/utils/colors.dart';
 import 'package:app_food_delivery/utils/dimensions.dart';
 import 'package:app_food_delivery/widget/app_text_field.dart';
@@ -38,6 +39,13 @@ class _AddressPageState extends State<AddressPage> {
     if (_isLogged && Get.find<UserController>().userModel == null) {
       Get.find<UserController>().getUserInfo();
     }
+    if(Get.find<LocationController>().getUserAddressFromLocationStorage()==""){
+      Get.find<LocationController>().saveUserAddress(Get
+          .find<LocationController>()
+          .addressList
+          .last);
+    }
+
     if (Get.find<LocationController>().addressList.isNotEmpty) {
       Get.find<LocationController>().getUserAddress();
       _cameraPosition = CameraPosition(
@@ -106,6 +114,14 @@ class _AddressPageState extends State<AddressPage> {
                               _cameraPosition = position),
                           onMapCreated: (GoogleMapController controller) {
                             locationController.setMapController(controller);
+                          },
+                          onTap: (latlng) {
+                            Get.toNamed(RouteHelper.getPickAddressPage(),
+                            arguments: PickAddressMap(
+                              fromAddress: true,
+                              fromSignup: false,
+                              googleMapController: locationController.mapController,
+                            ));
                           },
                         )
                       ],
