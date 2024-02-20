@@ -99,10 +99,8 @@ class AccountPage extends StatelessWidget {
                                   height: Dimensions.height20,
                                 ),
                                 //address
-                                GetBuilder<LocationController>(
-                                    builder: (locationController) {
-                                  if (_userLoggedIn &&
-                                      locationController.addressList.isEmpty) {
+                                GetBuilder<LocationController>(builder: (locationController) {
+                                  if (_userLoggedIn && locationController.addressList.isEmpty) {
                                     return GestureDetector(
                                       onTap: () {
                                         Get.offNamed(

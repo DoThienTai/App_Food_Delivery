@@ -1,13 +1,16 @@
 
 import 'dart:convert';
 
+import 'package:app_food_delivery/data/api/api_checker.dart';
 import 'package:app_food_delivery/data/respository/location_repo.dart';
 import 'package:app_food_delivery/models/response_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../models/address_model.dart';
+import 'package:google_maps_webservice/places.dart';
 
 class LocationController extends GetxController implements GetxService {
   LocationRepo locationRepo;
@@ -44,12 +47,18 @@ class LocationController extends GetxController implements GetxService {
   Position get position => _position;
   Position get pickPosition => _pickPosition;
 
+  //Biến ktra cho service zone
   bool _isLoading = false;
   bool get isLoading=>_isLoading;
+  //Biến ktra liệu người dùng có ở trong vùng dịch vụ không
   bool _inZone = false;
   bool get inZone=>_inZone;
+  //Biến ktra để hiển thị và ẩn nút chọn tại bản đồ
   bool _buttonDisabled = true;
   bool get buttonDisabled => _buttonDisabled;
+
+  //lưu các đề xuất bản đồ google cho địa chỉ
+  List<Prediction> _predictionList = [];
 
 
   void setMapController(GoogleMapController mapController) {
@@ -95,6 +104,8 @@ class LocationController extends GetxController implements GetxService {
           String _address = await getAddressfromGeocode(
               LatLng(position.target.latitude, position.target.longitude));
           fromAddress?_placemark=Placemark(name: _address):_pickPlacemark = Placemark(name: _address);
+        }else{
+          _changeAddress = true;
         }
       } catch (e) {
         print(e);
@@ -214,5 +225,51 @@ class LocationController extends GetxController implements GetxService {
     }
     update();
     return _responseModel;
+  }
+
+  Future<List<Prediction>> searchLocation(BuildContext context, String text) async {
+    if(text.isNotEmpty){
+      Response response = await locationRepo.searchLocation(text);
+      if(response.statusCode==200 &&response.body["status"]=='OK'){
+        _predictionList = [];
+        response.body['predictions'].forEach((prediction)
+        =>_predictionList.add(Prediction.fromJson(prediction)));
+      }else{
+        ApiChecker.checkApi(response);
+      }
+    }
+    return _predictionList;
+  }
+
+  setLocation(String placeID, String address, GoogleMapController mapController) async {
+    _loading = true;
+    update();
+    PlacesDetailsResponse detail;
+    Response response = await locationRepo.setLocation(placeID);
+    detail = PlacesDetailsResponse.fromJson(response.body);
+    _pickPosition= Position(
+      latitude: detail.result.geometry!.location.lat,
+      longitude:detail.result.geometry!.location.lng,
+      timestamp: DateTime.now(),
+      accuracy: 1,
+      altitude: 1,
+      heading: 1,
+      speed: 1,
+      headingAccuracy: 1,
+      speedAccuracy: 1,
+      altitudeAccuracy: 1,
+    );
+    _pickPlacemark = Placemark(name: address);
+    _changeAddress = false;
+    if(!mapController.isNull){
+      mapController.animateCamera(CameraUpdate.newCameraPosition(
+          CameraPosition(target: LatLng(
+            detail.result.geometry!.location.lat,
+            detail.result.geometry!.location.lng,
+          ), zoom: 17)
+      ));
+    }
+    _loading = false;
+    update();
   }
 }
