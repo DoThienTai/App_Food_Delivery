@@ -2,7 +2,7 @@ class AppConstants{
   static const String APP_NAME = "DBFood";
   static const int APP_VERSION = 1;
 
-  static const String BASE_URL = "http://192.168.1.5:8000";//"http://mvs.bslmeiyu.com";
+  static const String BASE_URL = "http://192.168.1.3:8000";//"http://mvs.bslmeiyu.com";
   static const String POPULAR_PRODUCT_URI = "/api/v1/products/popular";
   static const String RECOMMENDED_PRODUCT_URI = "/api/v1/products/recommended";
   static const String UPLOAD_URL = "/uploads/";
@@ -19,6 +19,7 @@ class AppConstants{
   static const String SEARCH_LOCATION_URI="/api/v1/config/place-api-autocomplete";
   static const String PLACE_DETAILS_URI="/api/v1/config/place-api-details";
 
+  static const String PLACE_ORDER_URI="/api/v1/customer/order/place";
 
   static const String TOKEN = "";
   static const String PHONE = "";

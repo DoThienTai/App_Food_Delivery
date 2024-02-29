@@ -18,13 +18,13 @@ class LocationDialogue extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(Dimensions.width10),
       alignment: Alignment.topCenter,
-      child: SingleChildScrollView(
-        child: Material(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(Dimensions.radius20/2),
-          ),
-          child: SizedBox(
-            width: Dimensions.screenWidth,
+      child: Material(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(Dimensions.radius20/2),
+        ),
+        child: SizedBox(
+          width: Dimensions.screenWidth,
+          child: SingleChildScrollView(
             child: TypeAheadField(
               textFieldConfiguration: TextFieldConfiguration(
                 controller: _controller,
