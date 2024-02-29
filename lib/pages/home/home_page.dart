@@ -2,6 +2,7 @@ import 'package:app_food_delivery/pages/account/account_page.dart';
 import 'package:app_food_delivery/pages/auth/sign_up_page.dart';
 import 'package:app_food_delivery/pages/cart/cart_history.dart';
 import 'package:app_food_delivery/pages/home/main_food_page.dart';
+import 'package:app_food_delivery/pages/order/order_page.dart';
 import 'package:app_food_delivery/utils/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +40,7 @@ class _HomePageState extends State<HomePage> {
   List<Widget> _buildScreens() {
     return [
       MainFoodPage(),
-      Container(),
+      OrderPage(),
       CartHistory(),
       AccountPage(),
     ];
@@ -54,7 +55,7 @@ class _HomePageState extends State<HomePage> {
       ),
       PersistentBottomNavBarItem(
         icon: Icon(CupertinoIcons.archivebox_fill),
-        title: ("Archive"),
+        title: ("History"),
         activeColorPrimary: CupertinoColors.activeBlue,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),

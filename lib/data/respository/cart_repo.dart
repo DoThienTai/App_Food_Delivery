@@ -64,7 +64,7 @@ class CartRepo{
     //xoa khi vong for tren dc goi
     removeCart();
     sharedPreferences.setStringList(AppConstants.CART_HISTORY_LIST, cartHistory);
-    print("the length of history list " + getCartHistoryList().length.toString());
+    //print("the length of history list " + getCartHistoryList().length.toString());
   }
 
   void removeCart(){

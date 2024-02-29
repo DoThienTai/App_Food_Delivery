@@ -35,7 +35,7 @@ class OrderSuccessPage extends StatelessWidget {
               status == 1
                   ? 'You placed the order successfully'
                   : 'your order failed',
-              style: TextStyle(fontSize: Dimensions.font26),
+              style: TextStyle(fontSize: Dimensions.font20),
             ),
             SizedBox(
               height: Dimensions.height20,
@@ -43,7 +43,7 @@ class OrderSuccessPage extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(
                   horizontal: Dimensions.height20,
-                  vertical: Dimensions.height20),
+                  vertical: Dimensions.height10),
               child: Text(status == 1 ? 'Successful order' : 'Failed order',
                   style: TextStyle(
                       fontSize: Dimensions.font20,
@@ -51,10 +51,10 @@ class OrderSuccessPage extends StatelessWidget {
                   textAlign: TextAlign.center),
             ),
             SizedBox(
-              height: Dimensions.height30,
+              height: Dimensions.height10,
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: Dimensions.height20),
+              padding: EdgeInsets.symmetric(horizontal: Dimensions.height10),
               child: CustomButton(
                 buttonText: 'Back to home', onPressed: () => Get.offNamed(RouteHelper.getInitial()),
               ),
