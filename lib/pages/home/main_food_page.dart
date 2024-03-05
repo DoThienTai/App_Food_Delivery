@@ -29,13 +29,13 @@ class _MainFoodPageState extends State<MainFoodPage> {
                     children: [
                       BigText(
                         color: AppColors.mainColor,
-                        text: "Country",
+                        text: "Quốc gia",
                       ),
                       Row(
                         children: [
                           SmallText(
                             color: Colors.black54,
-                            text: "City",
+                            text: "Thành phố",
                           ),
                           Icon(Icons.arrow_drop_down_rounded),
                         ],

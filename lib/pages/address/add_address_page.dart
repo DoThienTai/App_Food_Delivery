@@ -179,32 +179,32 @@ class _AddressPageState extends State<AddressPage> {
                   SizedBox(height: Dimensions.height20),
                   Padding(
                     padding: EdgeInsets.only(left: Dimensions.width20),
-                    child: BigText(text: 'Delivery address'),
+                    child: BigText(text: 'Địa chỉ giao hàng'),
                   ),
                   SizedBox(height: Dimensions.height10),
                   AppTextField(
                       textController: _addressController,
-                      hintText: "Your address",
+                      hintText: "Địa chỉ của bạn",
                       icon: Icons.map),
                   SizedBox(height: Dimensions.height20),
                   Padding(
                     padding: EdgeInsets.only(left: Dimensions.width20),
-                    child: BigText(text: 'Contact name'),
+                    child: BigText(text: 'Tên liên lạc'),
                   ),
                   SizedBox(height: Dimensions.height10),
                   AppTextField(
                       textController: _contactPersonName,
-                      hintText: "Your name",
+                      hintText: "Tên của bạn",
                       icon: Icons.person),
                   SizedBox(height: Dimensions.height20),
                   Padding(
                     padding: EdgeInsets.only(left: Dimensions.width20),
-                    child: BigText(text: 'Your number'),
+                    child: BigText(text: 'Số điện thoại'),
                   ),
                   SizedBox(height: Dimensions.height10),
                   AppTextField(
                       textController: _contactPersonNumber,
-                      hintText: "Your phone",
+                      hintText: "Số điện thoại",
                       icon: Icons.phone),
                 ],
               ),
@@ -258,7 +258,7 @@ class _AddressPageState extends State<AddressPage> {
                     },
                     child: Container(
                       child: BigText(
-                        text: "Save address",
+                        text: "Lưu địa chỉ",
                         color: Colors.white,
                         size: 26,
                       ),

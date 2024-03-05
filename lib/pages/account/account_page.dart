@@ -117,7 +117,7 @@ class AccountPage extends StatelessWidget {
                                           size: Dimensions.height10 * 5,
                                         ),
                                         bigText: BigText(
-                                            text: "Fill in your address"),
+                                            text: "Tìm địa chỉ "),
                                       ),
                                     );
                                   } else {
@@ -135,7 +135,7 @@ class AccountPage extends StatelessWidget {
                                           iconSize: Dimensions.height10 * 5 / 2,
                                           size: Dimensions.height10 * 5,
                                         ),
-                                        bigText: BigText(text: "Your address"),
+                                        bigText: BigText(text: "Địa chỉ của bạn"),
                                       ),
                                     );
                                   }
@@ -152,7 +152,7 @@ class AccountPage extends StatelessWidget {
                                     iconSize: Dimensions.height10 * 5 / 2,
                                     size: Dimensions.height10 * 5,
                                   ),
-                                  bigText: BigText(text: "Messages"),
+                                  bigText: BigText(text: "Tin nhắn"),
                                 ),
                                 SizedBox(
                                   height: Dimensions.height20,
@@ -166,7 +166,7 @@ class AccountPage extends StatelessWidget {
                                       Get.find<LocationController>().clearAddressList();
                                       Get.offNamed(RouteHelper.getSignIn());
                                     } else {
-                                      print("you logged out");
+                                      print("Bạn đã đăng xuất");
                                       Get.offNamed(RouteHelper.getSignIn());
                                     }
                                   },
@@ -178,7 +178,7 @@ class AccountPage extends StatelessWidget {
                                       iconSize: Dimensions.height10 * 5 / 2,
                                       size: Dimensions.height10 * 5,
                                     ),
-                                    bigText: BigText(text: "Logout"),
+                                    bigText: BigText(text: "Đăng xuất"),
                                   ),
                                 ),
                                 SizedBox(
@@ -228,7 +228,7 @@ class AccountPage extends StatelessWidget {
                           ),
                           child: Center(
                               child: BigText(
-                            text: "Sign In ",
+                            text: "Đăng nhập ",
                             color: Colors.white,
                             size: Dimensions.font20,
                           )),

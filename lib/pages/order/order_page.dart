@@ -1,3 +1,4 @@
+import 'package:app_food_delivery/base/custom_app_bar.dart';
 import 'package:app_food_delivery/controllers/auth_controller.dart';
 import 'package:app_food_delivery/pages/order/view_order.dart';
 import 'package:app_food_delivery/utils/colors.dart';
@@ -31,11 +32,8 @@ class _OrderPageState extends State<OrderPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "My orders",
-        ),
-        backgroundColor: AppColors.mainColor,
+      appBar: CustomAppBar(
+        title: "My orders",
       ),
       body: Column(
         children: [

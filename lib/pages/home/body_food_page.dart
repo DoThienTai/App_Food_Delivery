@@ -92,7 +92,7 @@ class _BodyFoodPageState extends State<BodyFoodPage> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              BigText(text: "Recommended"),
+              BigText(text: "Khuyến Khích"),
               SizedBox(
                 width: Dimensions.width10,
               ),

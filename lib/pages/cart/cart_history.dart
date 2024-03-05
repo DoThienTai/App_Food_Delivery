@@ -157,13 +157,13 @@ class CartHistory extends StatelessWidget {
                                                 CrossAxisAlignment.end,
                                             children: [
                                               SmallText(
-                                                text: "total",
+                                                text: "Tổng",
                                                 color: AppColors.titleColor,
                                               ),
                                               BigText(
                                                 text: itemsPerOrder[i]
                                                         .toString() +
-                                                    " Items",
+                                                    " Vật phẩm",
                                                 color: AppColors.titleColor,
                                               ),
                                               GestureDetector(
@@ -215,7 +215,7 @@ class CartHistory extends StatelessWidget {
                                                             .mainColor),
                                                   ),
                                                   child: SmallText(
-                                                    text: "one more",
+                                                    text: "Thêm nữa",
                                                     color: AppColors.mainColor,
                                                   ),
                                                 ),
@@ -236,7 +236,7 @@ class CartHistory extends StatelessWidget {
                 : Container(
                     height: MediaQuery.of(context).size.height / 1.5,
                     child: const NoDataPage(
-                      text: "you didn't buy anything so far ! ",
+                      text: "Bạn không mua bất cứ thứ gì hôm nay ! ",
                       imgPath: "assets/image/empty_box.png",
                     ));
           })

@@ -1,3 +1,4 @@
+import 'package:app_food_delivery/base/custom_loader.dart';
 import 'package:app_food_delivery/controllers/order_controller.dart';
 import 'package:app_food_delivery/models/order_model.dart';
 import 'package:app_food_delivery/utils/colors.dart';
@@ -38,10 +39,15 @@ class ViewOrder extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text("#order ID:     " +
-                                    orderList[index].id.toString()),
+                                Row(
+                                  children: [
+                                    Text("#order ID:"),
+                                    SizedBox(width: Dimensions.width10/2,),
+                                    Text('#${orderList[index].id.toString()}')
+                                  ],
+                                ),
                                 Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Container(
                                       decoration: BoxDecoration(
@@ -83,7 +89,7 @@ class ViewOrder extends StatelessWidget {
             ),
           );
         } else {
-          return Text("loading");
+          return CustomLoader();
         }
       }),
     );

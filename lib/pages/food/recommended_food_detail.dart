@@ -206,7 +206,7 @@ class RecommendedFoodDetail extends StatelessWidget {
                     },
                     child: Container(
                       child: BigText(
-                        text: "\$ ${product.price!} | Add to card",
+                        text: "\$ ${product.price!} | Thêm vào giỏ",
                         color: Colors.white,
                       ),
                       padding: EdgeInsets.only(

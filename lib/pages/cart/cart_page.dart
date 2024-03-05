@@ -1,3 +1,4 @@
+import 'package:app_food_delivery/base/common_text_button.dart';
 import 'package:app_food_delivery/base/no_data_page.dart';
 import 'package:app_food_delivery/base/show_custom_snackbar.dart';
 import 'package:app_food_delivery/controllers/auth_controller.dart';
@@ -8,10 +9,13 @@ import 'package:app_food_delivery/controllers/popular_product_controller.dart';
 import 'package:app_food_delivery/controllers/recommended_product_controller.dart';
 import 'package:app_food_delivery/controllers/user_controller.dart';
 import 'package:app_food_delivery/models/place_order_model.dart';
+import 'package:app_food_delivery/pages/order/delivery_option.dart';
 import 'package:app_food_delivery/utils/colors.dart';
 import 'package:app_food_delivery/utils/dimensions.dart';
 import 'package:app_food_delivery/widget/app_icon.dart';
+import 'package:app_food_delivery/widget/app_text_field.dart';
 import 'package:app_food_delivery/widget/big_text.dart';
+import 'package:app_food_delivery/pages/order/payment_option_button.dart';
 import 'package:app_food_delivery/widget/small_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -26,6 +30,7 @@ class CartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController _noteController = TextEditingController();
     return Scaffold(
       body: Stack(
         children: [
@@ -279,24 +284,122 @@ class CartPage extends StatelessWidget {
           })
         ],
       ),
-      bottomNavigationBar:
-          GetBuilder<CartController>(builder: (cartController) {
-        return Container(
-          height: Dimensions.bottomHeightBar,
-          padding: EdgeInsets.only(
-              top: Dimensions.height30,
-              bottom: Dimensions.height30,
-              right: Dimensions.width20,
-              left: Dimensions.width20),
-          decoration: BoxDecoration(
-            color: AppColors.buttonBackgroundColor,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(Dimensions.radius20 * 2),
-              topRight: Radius.circular(Dimensions.radius20 * 2),
+      bottomNavigationBar: GetBuilder<OrderController>(builder: (orderController){
+        _noteController.text = orderController.foodNote;
+        return GetBuilder<CartController>(builder: (cartController) {
+          return Container(
+            height: Dimensions.bottomHeightBar+50,
+            padding: EdgeInsets.only(
+                top: Dimensions.height10,
+                bottom: Dimensions.height10,
+                right: Dimensions.width20,
+                left: Dimensions.width20),
+            decoration: BoxDecoration(
+              color: AppColors.buttonBackgroundColor,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(Dimensions.radius20 * 2),
+                topRight: Radius.circular(Dimensions.radius20 * 2),
+              ),
             ),
-          ),
-          child: cartController.getItems.length > 0
-              ? Row(
+            child: cartController.getItems.length > 0
+                ? Column(
+              children: [
+                InkWell(
+                  onTap: () => showModalBottomSheet(
+                      backgroundColor: Colors.transparent,
+                      context: context,
+                      builder: (_){
+                        return Column(
+                          children: [
+                            Expanded(
+                              child: SingleChildScrollView(
+                                child: Container(
+                                  height: MediaQuery.of(context).size.height*0.9,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(Dimensions.radius20),
+                                          topRight: Radius.circular(Dimensions.radius20)
+                                      )
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        height: 520,
+                                        padding: EdgeInsets.only(
+                                          left: Dimensions.width10,
+                                          right: Dimensions.width10,
+                                          top: Dimensions.height20,
+                                        ),
+                                        child:  Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            const PaymentOptionButton(
+                                              icon: Icons.money,
+                                              title: 'Cash on delivery',
+                                              subTitle: 'Thanh toán khi nhận hàng',
+                                              index: 0,
+                                            ),
+                                            SizedBox(height: Dimensions.height10,),
+                                            const PaymentOptionButton(
+                                              icon: Icons.paypal_outlined,
+                                              title: 'Digital payment',
+                                              subTitle: 'Thanh toán an toàn và nhanh hơn',
+                                              index: 1,
+                                            ),
+                                            SizedBox(height: Dimensions.height30,),
+                                            Text('Tùy chọn giao hàng',
+                                              style: TextStyle(
+                                                fontSize: Dimensions.font20,
+                                                fontWeight: FontWeight.w500,
+                                                fontFamily: 'Roboto',
+                                              ),
+                                            ),
+                                            DeliveryOption(
+                                              title: "Tại nhà",
+                                              value: 'delivery',
+                                              amount: double.parse(Get.find<CartController>().totalAmount.toString()),
+                                              isFree: false,
+                                            ),
+                                            SizedBox(height: Dimensions.height10/2,),
+                                            DeliveryOption(
+                                              title: "Mang về",
+                                              value: 'take away',
+                                              amount: 10.0,
+                                              isFree: true,
+                                            ),
+                                            SizedBox(height: Dimensions.height20,),
+                                            Text('Lưu ý',
+                                              style: TextStyle(
+                                                fontSize: Dimensions.font20,
+                                                fontWeight: FontWeight.w500,
+                                                fontFamily: 'Roboto',
+                                              ),
+                                            ),
+                                            AppTextField(
+                                              textController: _noteController,
+                                              hintText: '',
+                                              icon: Icons.note,
+                                              maxLines: true,
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        );
+                      }).whenComplete(() => orderController.setFoodNote(_noteController.text.trim())),
+                  child: SizedBox(
+                    width: double.maxFinite,
+                    child:  CommonTextButton(text: "Tùy chọn giao hàng"),
+                  ),
+                ),
+                SizedBox(height: Dimensions.height10,),
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
@@ -308,7 +411,7 @@ class CartPage extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius:
-                            BorderRadius.circular(Dimensions.radius20),
+                        BorderRadius.circular(Dimensions.radius20),
                       ),
                       child: Row(
                         children: [
@@ -317,7 +420,7 @@ class CartPage extends StatelessWidget {
                           ),
                           BigText(
                               text:
-                                  "\$ ${cartController.totalAmount.toString()}"),
+                              "\$ ${cartController.totalAmount.toString()}"),
                           SizedBox(
                             width: Dimensions.width10 / 2,
                           ),
@@ -328,64 +431,60 @@ class CartPage extends StatelessWidget {
                       onTap: () {
                         //popularProduct.addItem(product);
                         if (Get.find<AuthController>().userLoggedIn()) {
-                          if (Get.find<LocationController>().addressList.isEmpty) {
+                          if (Get.find<LocationController>()
+                              .addressList
+                              .isEmpty) {
                             Get.toNamed(RouteHelper.getAddressPage());
                           } else {
-                            //Get.offNamed(RouteHelper.getInitial());
-                            //Get.offNamed(RouteHelper.getPaymentPage("100003", Get.find<UserController>().userModel!.id!));
-                            // var location = Get.find<LocationController>().getUserAddress();
-                            // var cart = Get.find<CartController>().getItems;
-                            // var user = Get.find<UserController>().userModel;
-                            // PlaceOrderBody placeOrder = PlaceOrderBody(
-                            //     cart: cart,
-                            //     orderAmount: 100.0,
-                            //     distance: 10.0,
-                            //     scheduleAt: '',
-                            //     orderNote: 'Not about the food',
-                            //     address: location.address,
-                            //     latitude: location.latitude,
-                            //     longitude: location.longitude,
-                            //     contactPersonName: user!.name,
-                            //     contactPersonNumber: user!.phone);
-                            // Get.find<OrderController>().placeOrder(
-                            //     placeOrder,
-                            //     _callback
-                            // );
-
-                            cartController.addToHistory();
+                            var location = Get.find<LocationController>().getUserAddress();
+                            var cart = Get.find<CartController>().getItems;
+                            var user = Get.find<UserController>().userModel;
+                            PlaceOrderBody placeOrder = PlaceOrderBody(
+                                cart: cart,
+                                orderAmount: 100.0,
+                                distance: 10.0,
+                                scheduleAt: '',
+                                orderNote: orderController.foodNote,
+                                address: location.address,
+                                latitude: location.latitude,
+                                longitude: location.longitude,
+                                contactPersonName: user!.name,
+                                contactPersonNumber: user!.phone,
+                                orderType: orderController.orderType,
+                                paymentMethod: orderController.paymentIndex==0?'cash_on_delivery':'digital_payment',
+                            );
+                            Get.find<OrderController>().placeOrder(
+                                placeOrder,
+                                _callback
+                            );
                           }
                         } else {
                           Get.toNamed(RouteHelper.getSignIn());
                         }
                       },
-                      child: Container(
-                        child: BigText(
-                          text: "Check out",
-                          color: Colors.white,
-                        ),
-                        padding: EdgeInsets.only(
-                            top: Dimensions.height15,
-                            bottom: Dimensions.height15,
-                            right: Dimensions.width20,
-                            left: Dimensions.width20),
-                        decoration: BoxDecoration(
-                          color: AppColors.mainColor,
-                          borderRadius:
-                              BorderRadius.circular(Dimensions.radius20),
-                        ),
-                      ),
+                      child: CommonTextButton(text: "Thanh toán"),
                     ),
                   ],
-                )
-              : Container(),
-        );
+                ),
+              ],
+            )
+                : Container(),
+          );
+        });
       }),
     );
   }
 
   void _callback(bool isSuccess, String message, String orderID) {
+    Get.find<CartController>().clear();
+    Get.find<CartController>().removeCartSharePreference();
+    Get.find<CartController>().addToHistory();
     if (isSuccess) {
-      Get.offNamed(RouteHelper.getPaymentPage(orderID, Get.find<UserController>().userModel!.id));
+      if(Get.find<OrderController>().paymentIndex==0){
+        Get.offNamed(RouteHelper.getOrderSuccessPage(orderID, "success"));
+      }else{
+        Get.offNamed(RouteHelper.getPaymentPage(orderID, Get.find<UserController>().userModel!.id));
+      }
     } else {
       showCustomSnackBar(message);
     }
